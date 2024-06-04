@@ -1,0 +1,23 @@
+.header {
+    padding: rem(34) rem(0) rem(34) rem(0);
+    // .header__container
+
+    &__container {
+    }
+}
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    // .nav__item
+
+    &__item {
+        font-weight: 400;
+        font-size: rem(20);
+        line-height: math.div(23, 20);
+
+        color: #0d6efd;
+        &:not(:last-child) {
+            margin-right: rem(39);
+        }
+    }
+}

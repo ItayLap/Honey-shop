@@ -1,0 +1,120 @@
+@use "sass:math";
+
+//import mixin
+@import "_mixin";
+
+//import fonts
+@import "_fonts";
+
+//defolt font
+$fontFamily: "Roboto";
+
+//defont font-size
+$fontSize: rem(22);
+
+//variable=========================================================
+
+//main color=============================
+$mainColor: #0d6efd;
+$mainBgColor: #ffffff;
+
+//settings adaptive=======================
+//min width page
+$minWidth: 320;
+//width of maket
+$maxWidth: 1920;
+
+//container width
+$maxWidthContainer: 1306;
+
+//pading container
+$containerPadding: 30;
+
+//container shrink breakpoint
+$containerWidth: $maxWidthContainer + $containerPadding;
+
+// break point
+$pc: em($containerWidth); // ПК, ноутбуки, некоторые планшеты в горизонтальном положении
+$tablet: em(991.98); // Планшеты, некоторые телефоны в горизонтальном положении
+$mobile: em(767.98); // phone L
+$mobileSmall: em(479.98); // phone S
+
+// Тип адаптива:
+// 1 = отзывчивость (у контейнера нет брейкпоинтов),
+// 2 = по брейк-поинтам (контейнер меняет свою ширину по брейк-поинтам)
+$responsiveType: 1;
+
+@import "_null";
+
+body {
+    background-color: $mainBgColor;
+}
+
+.wrapper {
+    overflow: hidden;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    > main {
+        flex: 1 1 auto;
+    }
+}
+
+// Ограничивающий контейнер ======================
+
+/*
+(i) Стили будут применяться ко 
+всем классам содержащим *__container
+Например header__container, main__container и т.д.
+Снипет (HTML): cnt
+*/
+@if ($responsiveType==1) {
+    // Отзывчивая
+    [class*="__container"] {
+        @if ($maxWidthContainer>0) {
+            max-width: rem($maxWidthContainer);
+            box-sizing: content-box;
+            margin: 0 auto;
+        }
+        @if ($containerPadding>0) {
+            padding: 0 rem(math.div($containerPadding, 2));
+        }
+        @media (max-width: $mobileSmall) {
+            padding: 0 rem(math.div(20, 2));
+        }
+    }
+} @else {
+    // По брейк-поинтам
+    [class*="__container"] {
+        margin: 0 auto;
+        @if ($maxWidthContainer>0) {
+            max-width: rem($maxWidthContainer);
+            box-sizing: content-box;
+        } @else {
+            @if ($containerPadding>0) {
+                padding: 0 rem(math.div($containerPadding, 2));
+            }
+        }
+        @media (max-width: $pc) {
+            max-width: rem(970);
+        }
+        @media (max-width: $tablet) {
+            max-width: rem(750);
+        }
+        @media (max-width: $mobile) {
+            max-width: none;
+            @if ($containerPadding>0 and $maxWidthContainer>0) {
+                padding: 0 rem(math.div($containerPadding, 2));
+            }
+        }
+        @media (max-width: $mobileSmall) {
+            padding: 0 rem(math.div(20, 2));
+        }
+    }
+}
+
+@import "_header";
+@import "_home";
+
+@import "_footer";
+@import "_media";
